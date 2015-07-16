@@ -27,25 +27,19 @@ function get_proxy_hostnames() {
 }
 
 function get_proxy_ip_addresses() {
-	
 	$hostnames = get_proxy_hostnames();
 
 	if ( function_exists( 'apc_fetch' ) ) {
-
-		$key  = 'hm_proxy_ip_addresses_' . md5( serialize( $hostnames ) );
+		$key = 'hm_proxy_ip_addresses_' . md5( serialize( $hostnames ) );
 
 		$ip_addresses = apc_fetch( $key );
 
-		if ( $ip_addresses ) {
-			return $ip_addresses;
+		if ( empty( $ip_addresses ) ) {
+			$ip_addresses = array_map( 'gethostbyname', $hostnames );
+
+			apc_store( $key, $ip_addresses, 3600 );
 		}
-
-		$ip_addresses = array_map( 'gethostbyname', $hostnames );
-
-		apc_store( $key, $ip_addresses, 3600 );
-
 	} else {
-		
 		$ip_addresses = array_map( 'gethostbyname', $hostnames );
 	}
 
