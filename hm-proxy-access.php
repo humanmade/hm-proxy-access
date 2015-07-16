@@ -11,10 +11,18 @@ define( 'HM_IS_PROXIED', is_proxied() );
 
 function get_proxy_hostnames() {
 	return array(
+		// Old-style
 		'eu.proxy.hmn.md',
 		'au.proxy.hmn.md',
 		'us-w.proxy.hmn.md',
-		'us-e.proxy.hmn.md'
+		'us-e.proxy.hmn.md',
+
+		// New-style, in ascending timezone order
+		'us-west-1.aws.hmn.md',
+		'us-east-1.aws.hmn.md',
+		'eu-west-1.aws.hmn.md',
+		'eu-central-1.aws.hmn.md',
+		'ap-southeast-2.aws.hmn.md',
 	);
 }
 
