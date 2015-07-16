@@ -53,15 +53,24 @@ function get_proxy_ip_addresses() {
 
 }
 
+/**
+ * Is the current request proxied?
+ *
+ * @return boolean
+ */
 function is_proxied() {
-	// If the request is coming via out proxy then define a Constant we can use later
-	if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && ( ! defined( 'HM_DEV' ) || ! HM_DEV ) ) {
-
-		// there can be multiple IPs if there are multiple reverse proxies. E.g ELB -> Varnish -> The Server
-		$upstream_ips = array_map( 'trim', explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
-
-		return (bool) array_intersect( $upstream_ips, get_proxy_ip_addresses() );
-	} else {
-		return defined( 'HM_DEV' ) && HM_DEV;
+	// Development should always count as proxied
+	if ( defined( 'HM_DEV' ) && HM_DEV ) {
+		return true;
 	}
+
+	// Is this proxied at all?
+	if ( empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+		return false;
+	}
+
+	// There can be multiple IPs if there are multiple reverse proxies. E.g ELB -> Varnish -> The Server
+	$upstream_ips = array_map( 'trim', explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
+
+	return (bool) array_intersect( $upstream_ips, get_proxy_ip_addresses() );
 }
