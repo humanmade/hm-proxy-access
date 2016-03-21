@@ -10,7 +10,7 @@ namespace HM\Proxy_Access;
 define( 'HM_IS_PROXIED', is_proxied() );
 
 function get_proxy_hostnames() {
-	return array(
+	return apply_filters( 'hm_proxy_hostnames', array(
 		// Old-style
 		'eu.proxy.hmn.md',
 		'au.proxy.hmn.md',
@@ -23,7 +23,7 @@ function get_proxy_hostnames() {
 		'eu-west-1.aws.hmn.md',
 		'eu-central-1.aws.hmn.md',
 		'ap-southeast-2.aws.hmn.md',
-	);
+	) );
 }
 
 function get_proxy_ip_addresses() {
@@ -43,7 +43,7 @@ function get_proxy_ip_addresses() {
 		$ip_addresses = array_map( 'gethostbyname', $hostnames );
 	}
 
-	return $ip_addresses;
+	return apply_filters( 'hm_proxy_ip_addresses', $ip_addresses );
 
 }
 
