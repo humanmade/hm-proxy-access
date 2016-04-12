@@ -22,6 +22,7 @@ function get_proxy_hostnames() {
 		'us-east-1.aws.hmn.md',
 		'eu-west-1.aws.hmn.md',
 		'eu-central-1.aws.hmn.md',
+		'ap-southeast-1.aws.hmn.md',
 		'ap-southeast-2.aws.hmn.md',
 	) );
 }
