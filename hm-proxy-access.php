@@ -60,10 +60,12 @@ function is_proxied() {
 	}
 
 	// Is this proxied at all?
-	if ( empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-		$ip = $_SERVER['REMOTE_ADDR'];
-	} else {
+	if ( ! empty( $_SERVER['HTTP_X_IP_TRAIL'] ) ) {
+		$ip = $_SERVER['HTTP_X_IP_TRAIL'];
+	} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} else {
+		$ip = $_SERVER['REMOTE_ADDR'];
 	}
 
 	// There can be multiple IPs if there are multiple reverse proxies. E.g ELB -> Varnish -> The Server
