@@ -59,14 +59,6 @@ function is_proxied() {
 	if ( defined( 'HM_DEV' ) && HM_DEV ) {
 		return true;
 	}
-
-	// Is this proxied at all?
-	if ( empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-		$ip = $_SERVER['REMOTE_ADDR'];
-	} else {
-		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	}
-
 	// There can be multiple IPs if there are multiple reverse proxies. E.g ELB -> Varnish -> The Server
 	$upstream_ips = array_map( 'trim', explode( ',', $ip ) );
 
