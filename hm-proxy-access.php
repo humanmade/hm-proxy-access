@@ -30,19 +30,22 @@ function get_proxy_hostnames() {
 
 function get_proxy_ip_addresses() {
 	$hostnames = get_proxy_hostnames();
+	$cache_key = 'hm_proxy_ip_addresses_' . md5( serialize( $hostnames ) );
 
 	if ( function_exists( 'apc_fetch' ) ) {
-		$key = 'hm_proxy_ip_addresses_' . md5( serialize( $hostnames ) );
-
-		$ip_addresses = apc_fetch( $key );
+		$ip_addresses = apc_fetch( $cache_key );
 
 		if ( empty( $ip_addresses ) ) {
 			$ip_addresses = array_map( 'gethostbyname', $hostnames );
-
-			apc_store( $key, $ip_addresses, 3600 );
+			apc_store( $cache_key, $ip_addresses, 3600 );
 		}
 	} else {
-		$ip_addresses = array_map( 'gethostbyname', $hostnames );
+		$ip_addresses = wp_cache_get( $cache_key );
+
+		if ( empty( $ip_addresses ) ) {
+			$ip_addresses = array_map( 'gethostbyname', $hostnames );
+			wp_cache_set( $cache_key, $ip_addresses, '', DAY_IN_SECONDS );
+		}
 	}
 
 	return apply_filters( 'hm_proxy_ip_addresses', $ip_addresses );
