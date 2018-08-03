@@ -59,7 +59,7 @@ function get_proxy_ip_addresses() {
  */
 function is_proxied() {
 	// Development should always count as proxied
-	if ( defined( 'HM_DEV' ) && HM_DEV ) {
+	if ( defined( 'HM_DEV' ) && HM_DEV && ! ( defined( 'HM_DEV_NOT_PROXIED' ) && HM_DEV_NOT_PROXIED ) ) {
 		return true;
 	}
 
