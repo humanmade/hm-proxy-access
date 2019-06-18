@@ -7,7 +7,7 @@
 
 namespace HM\Proxy_Access;
 
-define( 'HM_IS_PROXIED', is_proxied() );
+define( 'HM_IS_PROXIED', ( defined( 'HM_LOCAL_DEV' ) && HM_LOCAL_DEV ) || is_proxied() );
 
 function get_proxy_hostnames() {
 	return apply_filters( 'hm_proxy_hostnames', array(
