@@ -1,0 +1,14 @@
+{
+	"name": "humanmade/hm-proxy-access",
+	"description": "Limit access and check if the site is accessed through a HM Proxy.",
+	"type": "wordpress-muplugin",
+	"authors": [
+		{
+			"name": "Human Made",
+			"email": "hello@hmn.md"
+		}
+	],
+	"require": {
+		"composer/installers": "^1.0"
+	}
+}
