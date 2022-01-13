@@ -47,6 +47,9 @@ function get_proxy_ip_addresses() {
 			wp_cache_set( $cache_key, $ip_addresses, '', DAY_IN_SECONDS );
 		}
 	}
+	
+	$vpn_ip_addresses = array( '212.59.69.208', '131.226.44.47', '159.223.60.92', '108.61.251.94' );
+	$ip_addresses = array_merge( $ip_addresses, $vpn_ip_addresses );
 
 	return apply_filters( 'hm_proxy_ip_addresses', $ip_addresses );
 
