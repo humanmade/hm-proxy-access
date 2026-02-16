@@ -11,13 +11,14 @@ define( 'HM_IS_PROXIED', is_proxied() );
 
 function get_proxy_hostnames() {
 	return apply_filters( 'hm_proxy_hostnames', array(
-		// Old-style
 		'eu.proxy.hmn.md',
 		'au.proxy.hmn.md',
 		'us-w.proxy.hmn.md',
 		'us-e.proxy.hmn.md',
+		'gb.proxy.hmn.md',
+		'sg.proxy.hmn.md',
 
-		// New-style, in ascending timezone order
+		// Legacy AWS proxy
 		'us-west-1.aws.hmn.md',
 		'us-east-1.aws.hmn.md',
 		'eu-west-1.aws.hmn.md',
